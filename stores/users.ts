@@ -3,9 +3,10 @@ import { defineStore } from "pinia";
 export interface createUser { 
     name: '', 
     email: '', 
-    tel: '', 
+    fone: '', 
+    cpf: '',
     password: ''
-    confmpassword: '', 
+    confpassword: '', 
 }
 
 export interface usersInterface extends createUser {
@@ -18,9 +19,9 @@ export const userModal = defineStore('users',{
     }),
     actions:{
         async createUser(user: createUser){ 
-            const {data, error} = await useFetch<createUser[]>('users',{
+            const {data, error} = await useFetch<createUser>('users',{
                 method: 'POST', 
-                baseURL: 'http://localhost:3001/', 
+                baseURL: useRuntimeConfig().public.backend, 
                 body:{
                     ...user
                 }
@@ -30,8 +31,8 @@ export const userModal = defineStore('users',{
             }
             
             if(data.value){
-                this.user = data.value
-                console.log( "teste ");
+                // this.user = data.value
+                console.log( data.value);
             }
         }, 
         async show(){ 

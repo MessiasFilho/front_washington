@@ -11,31 +11,56 @@
                     </div>
                 </div>
                 <DialogDescription>
-                    
+                    <Select v-model:="pessoa"  class="outline-none">
+                        <SelectTrigger class="w-[180px]">
+                            <SelectValue placeholder='teste' />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <!-- <SelectLabel>Pessoa</SelectLabel> -->
+                                <SelectItem  value="Fisica" >
+                                    Fisica
+                                </SelectItem> 
+                                <SelectItem value="juridica">
+                                    Juridica
+                                </SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                     </Select>
                 </DialogDescription>
             </DialogHeader>
-                <div class="w-full">
-                </div>
-                <div class="space-y-2 flex items-center justify-center flex-col ">
-                    <div class="flex flex-col w-full">
-                        <label for="name" >Nome</label>
-                        <input v-model="user.name" id="name" class="outline-none text-black rounded-sm" type="text">
-                    </div>
-                    <div class="flex flex-col w-full">
-                        <label for="email">G-mail</label>
-                        <input v-model="user.email" id="email" class="outline-none text-black rounded-sm" type="text">
-                    </div>
-                    <div class="flex flex-col w-full">
-                        <label for="telefone">telefone</label>
-                        <input v-model="user.tel" id="telefone" class="outline-none text-black rounded-sm" type="tel">
-                    </div>
-                    <div class="flex flex-col w-full">
-                        <label for="senha">senha</label>
-                        <input v-model="user.password" id="senha" class="outline-none text-black rounded-sm" type="password">
-                    </div>
-                    <div class="flex flex-col w-full">
-                        <label for="confir">confirmar senha</label>
-                        <input :v-model="user.confmpassword" id="confir" class="outline-none text-black rounded-sm" type="password">
+                <div >
+                    <div  class="space-y-2 flex items-center justify-center flex-col">
+                        <div class="flex flex-col w-full">
+                            <label for="name" >Nome</label>
+                            <input v-model="user.name" id="name" class="outline-none text-black rounded-sm px-2" type="text">
+                        </div>
+                        <div class="flex flex-col w-full">
+                            <label for="email">G-mail</label>
+                            <input v-model="user.email" id="email" class="outline-none text-black rounded-sm px-2" type="text">
+                        </div>
+                        <div class="flex flex-col w-full">
+                            <label for="email">CPF</label>
+                            <input v-model="user.cpf" id="email" class="outline-none text-black rounded-sm px-2" type="text">
+                        </div>
+                        <template v-if="pessoa !== 'juridica' || null  ">
+                            <div  class="flex flex-col w-full">
+                                <label for="email">CNPJ</label>
+                                <input v-model="user.cpf" id="email" class="outline-none text-black rounded-sm px-2" type="text">
+                            </div>
+                        </template>
+                        <div class="flex flex-col w-full">
+                            <label for="telefone">telefone</label>
+                            <input v-model="user.fone" id="telefone" class="outline-none text-black rounded-sm px-2" type="tel">
+                        </div>
+                        <div class="flex flex-col w-full">
+                            <label for="senha">senha</label>
+                            <input v-model="user.password" id="senha" class="outline-none text-black rounded-sm px-2" type="password">
+                        </div>
+                        <div class="flex flex-col w-full">
+                            <label for="confir">confirmar senha</label>
+                            <input v-model="user.confpassword" id="confir" class="outline-none text-black rounded-sm px-2" type="password">
+                        </div>
                     </div>
                 </div>
             <DialogFooter>
@@ -50,22 +75,25 @@
 
 <script lang="ts" setup>
 
+
+const pessoa = ref('fisica')
 const use_modal = useModal()
 const use_user = userModal()
 
 const user = ref<createUser>({ 
     name: '', 
     email: '', 
-    tel: '', 
+    fone: '',
+    cpf: '', 
     password: '', 
-    confmpassword: ''
+    confpassword: ''
 })
 
 const createUser = async () =>{
-    await use_user.createUser(user.value)
+    console.log(pessoa.value);
+    
+    // await use_user.createUser(user.value)
 }
-
-
 
 const navigatePage = (page: string) =>{
     return navigateTo({

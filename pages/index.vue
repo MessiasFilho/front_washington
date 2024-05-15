@@ -11,11 +11,11 @@
             </div>
         </div>
       <div>
-        <span>
+        <!-- <span>
          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati voluptatem quidem, vitae architecto, possimus ullam nihil consequuntur ipsa at aperiam quibusdam, sunt reprehenderit! Tempore ad alias distinctio doloribus corrupti quaerat!
-        </span>
+        </span> -->
       </div>
-      <div class="w-full">  
+      <div class="w-full mt-6">  
         <span>Salas disponiveis </span>
         <div class="flex items-center overflow-x-auto snap-x space-x-3">
           <div v-for="i in 10">

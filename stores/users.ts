@@ -1,25 +1,31 @@
 import { defineStore } from "pinia";
 
-export interface createUser { 
-    name: '', 
-    email: '', 
-    fone: '', 
-    cpf: '',
-    password: ''
-    confpassword: '', 
+export interface createUserFisica { 
+    name: string, 
+    email: string, 
+    fone: string, 
+    pessoa: string,
+    cpf: string,
+    password: string, 
+    confpassword: string, 
 }
 
-export interface usersInterface extends createUser {
+export interface createUserJuridica extends createUserFisica {
+    cnpj: ''
+}
+
+export interface usersInterface extends createUserFisica {
     id: number,
 }
 
 export const userModal = defineStore('users',{
     state: () =>({
-       user: [] as createUser[]
+       user: [] as createUserFisica[]
     }),
     actions:{
-        async createUser(user: createUser){ 
-            const {data, error} = await useFetch<createUser>('users',{
+        
+        async createUser(user: createUserFisica){ 
+            const {data, error} = await useFetch<createUserFisica>('users',{
                 method: 'POST', 
                 baseURL: useRuntimeConfig().public.backend, 
                 body:{
@@ -31,10 +37,30 @@ export const userModal = defineStore('users',{
             }
             
             if(data.value){
-                // this.user = data.value
+                
                 console.log( data.value);
             }
-        }, 
+        },
+        
+        async UserJuridica(user: createUserJuridica){ 
+            const {data, error} = await useFetch<createUserJuridica>('users/legal',{
+                method: 'post', 
+                baseURL: useRuntimeConfig().public.backend, 
+                body:{
+                    ...user
+                }
+            })
+            if(error.value){
+                return console.log(error.value);
+            }
+            
+            if(data.value){
+                
+                console.log( data.value);
+            }
+        },
+        
+
         async show(){ 
             const {data, error} = await useFetch('http://localhost:3001/',{
                 method: 'get', 

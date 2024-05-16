@@ -11,9 +11,9 @@
                     </div>
                 </div>
                 <DialogDescription>
-                    <Select v-model:="pessoa"  class="outline-none">
+                    <Select v-model:modelValue="pessoa">
                         <SelectTrigger class="w-[180px]">
-                            <SelectValue placeholder='teste' />
+                            <SelectValue placeholder="Fisica" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
@@ -21,7 +21,7 @@
                                 <SelectItem  value="Fisica" >
                                     Fisica
                                 </SelectItem> 
-                                <SelectItem value="juridica">
+                                <SelectItem value="Juridica">
                                     Juridica
                                 </SelectItem>
                             </SelectGroup>
@@ -29,7 +29,7 @@
                      </Select>
                 </DialogDescription>
             </DialogHeader>
-                <div >
+                <template v-if="pessoa == 'Fisica'">
                     <div  class="space-y-2 flex items-center justify-center flex-col">
                         <div class="flex flex-col w-full">
                             <label for="name" >Nome</label>
@@ -40,15 +40,9 @@
                             <input v-model="user.email" id="email" class="outline-none text-black rounded-sm px-2" type="text">
                         </div>
                         <div class="flex flex-col w-full">
-                            <label for="email">CPF</label>
-                            <input v-model="user.cpf" id="email" class="outline-none text-black rounded-sm px-2" type="text">
+                            <label for="cpf">CPF</label>
+                            <input v-model="user.cpf" id="cpf" class="outline-none text-black rounded-sm px-2" type="text">
                         </div>
-                        <template v-if="pessoa !== 'juridica' || null  ">
-                            <div  class="flex flex-col w-full">
-                                <label for="email">CNPJ</label>
-                                <input v-model="user.cpf" id="email" class="outline-none text-black rounded-sm px-2" type="text">
-                            </div>
-                        </template>
                         <div class="flex flex-col w-full">
                             <label for="telefone">telefone</label>
                             <input v-model="user.fone" id="telefone" class="outline-none text-black rounded-sm px-2" type="tel">
@@ -62,11 +56,44 @@
                             <input v-model="user.confpassword" id="confir" class="outline-none text-black rounded-sm px-2" type="password">
                         </div>
                     </div>
-                </div>
+                </template>
+
+                <template v-if="pessoa == 'Juridica'">
+                    <div  class="space-y-2 flex items-center justify-center flex-col">
+                        <div class="flex flex-col w-full">
+                            <label for="name" >Nome</label>
+                            <input v-model="userJuridica.name" id="name" class="outline-none text-black rounded-sm px-2" type="text">
+                        </div>
+                        <div class="flex flex-col w-full">
+                            <label for="email">G-mail</label>
+                            <input v-model="userJuridica.email" id="email" class="outline-none text-black rounded-sm px-2" type="text">
+                        </div>
+                        <div class="flex flex-col w-full">
+                            <label for="cpf">CPF</label>
+                            <input v-model="userJuridica.cpf" id="cpf" class="outline-none text-black rounded-sm px-2" type="text">
+                        </div>
+                        <div  class="flex flex-col w-full">
+                            <label for="cnpj">CNPJ</label>
+                            <input v-model="userJuridica.cnpj" id="cnpj" class="outline-none text-black rounded-sm px-2" type="text">
+                        </div>
+                        <div class="flex flex-col w-full">
+                            <label for="telefone">telefone</label>
+                            <input v-model="userJuridica.fone" id="telefone" class="outline-none text-black rounded-sm px-2" type="tel">
+                        </div>
+                        <div class="flex flex-col w-full">
+                            <label for="senha">senha</label>
+                            <input v-model="userJuridica.password" id="senha" class="outline-none text-black rounded-sm px-2" type="password">
+                        </div>
+                        <div class="flex flex-col w-full">
+                            <label for="confir">confirmar senha</label>
+                            <input v-model="userJuridica.confpassword" id="confir" class="outline-none text-black rounded-sm px-2" type="password">
+                        </div>
+                    </div>
+                </template>
             <DialogFooter>
                 <div class="flex w-full justify-end space-x-3">
                     <button @click="navigatePage('index')" class="active:scale-95 p-1 text-white px-2 bg-red-600 uppercase rounded-md">cancelar</button>
-                    <button @click="createUser()" class="active:scale-95 p-1 text-white  bg-green-600 uppercase rounded-md">confirmar</button>
+                    <button @click="createUser()"  class="active:scale-95 p-1 text-white  bg-green-600 uppercase rounded-md">confirmar</button>
                 </div>
             </DialogFooter>
         </DialogContent>
@@ -74,25 +101,49 @@
 </template>
 
 <script lang="ts" setup>
+import type { createUserFisica, createUserJuridica } from '~/stores/users';
 
-
-const pessoa = ref('fisica')
+const pessoa = ref('Fisica')
 const use_modal = useModal()
 const use_user = userModal()
+const load = ref(true)
 
-const user = ref<createUser>({ 
+const user = ref<createUserFisica>({ 
     name: '', 
     email: '', 
     fone: '',
+    pessoa: pessoa.value,
     cpf: '', 
     password: '', 
     confpassword: ''
 })
+const userJuridica = ref<createUserJuridica>({ 
+    name: '', 
+    email: '', 
+    fone: '',
+    pessoa: pessoa.value,
+    cpf: '', 
+    cnpj:'',
+    password: '', 
+    confpassword: ''
+})
+
 
 const createUser = async () =>{
-    console.log(pessoa.value);
-    
-    // await use_user.createUser(user.value)
+    if( pessoa.value == 'Fisica'){
+        await use_user.createUser(user.value)
+    }else{
+        await use_user.UserJuridica({
+            name: userJuridica.value.name, 
+            email: userJuridica.value.email, 
+            fone: userJuridica.value.fone, 
+            pessoa: pessoa.value, 
+            cpf: userJuridica.value.cpf, 
+            cnpj: userJuridica.value.cnpj, 
+            password: userJuridica.value.password, 
+            confpassword: userJuridica.value.confpassword
+        })
+    }
 }
 
 const navigatePage = (page: string) =>{
@@ -100,6 +151,8 @@ const navigatePage = (page: string) =>{
             name: page
         })
 }
+
+
 </script>
 
 <style>

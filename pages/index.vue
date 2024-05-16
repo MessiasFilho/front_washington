@@ -30,8 +30,12 @@
 
           </div>
         </div>
+       
       </div>
-  </div>
+    </div>
+    <footer class="absolute  flex w-full h-full">
+      <span> redes sociais</span>
+    </footer>
 </template>
 
 <script lang="ts" setup>

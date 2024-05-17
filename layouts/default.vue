@@ -14,9 +14,9 @@
        </div>
       </header>
       <div class="relative mb-3">
-          <div class="relative ">
+          <div class="relative p-1 ">
             <img class="xl:h-[28rem] xl:w-[100rem] " src="https://r4.wallpaperflare.com/wallpaper/403/855/787/sword-blood-fantasy-armor-wallpaper-d98038ede1ba3dfb264758af0061862d.jpg" alt="root">
-          <div class="h-20 absolute bg-gradient-to-b from-transparent to-[var(--gradient)] filter blur-[1px] w-full bottom-0 "></div>
+          <div class="h-20 absolute bg-gradient-to-b from-transparent to-[var(--gradient)] filter blur-[1px] w-full bottom-0"></div>
         </div>
         
         <div class="absolute top-40 xl:top-96 w-full ">

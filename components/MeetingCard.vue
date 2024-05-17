@@ -1,6 +1,6 @@
 <template>
-    <Dialog :open="use_modal.marc">
-        <DialogContent>
+    <Dialog :open="use_modal.marc" >
+        <DialogContent  class=" rounded-md">
             <DialogHeader>
                 <div class="flex justify-between items-center">
                     <DialogTitle>

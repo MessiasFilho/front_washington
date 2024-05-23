@@ -25,7 +25,7 @@ export const userModal = defineStore('users',{
     actions:{
         
         async createUser(user: createUserFisica){ 
-            const {data, error} = await useFetch<createUserFisica>('users',{
+            const {data, error} = await useFetch<createUserFisica>('auth/register',{
                 method: 'POST', 
                 baseURL: useRuntimeConfig().public.backend, 
                 body:{
@@ -43,7 +43,7 @@ export const userModal = defineStore('users',{
         },
         
         async UserJuridica(user: createUserJuridica){ 
-            const {data, error} = await useFetch<createUserJuridica>('users/legal',{
+            const {data, error} = await useFetch<createUserJuridica>('auth/legal',{
                 method: 'post', 
                 baseURL: useRuntimeConfig().public.backend, 
                 body:{
@@ -74,6 +74,5 @@ export const userModal = defineStore('users',{
                 // console.log(data.value);
             }
         }
-
     } 
 })

@@ -131,7 +131,9 @@ const userJuridica = ref<createUserJuridica>({
 
 const createUser = async () =>{
     if( pessoa.value == 'Fisica'){
-        await use_user.createUser(user.value)
+      const data =  await use_user.createUser(user.value)
+        
+        
     }else{
         await use_user.UserJuridica({
             name: userJuridica.value.name, 

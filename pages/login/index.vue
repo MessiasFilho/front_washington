@@ -1,5 +1,7 @@
 <template>
-  <LoginDialog/>
+  <div class="h-screen">
+    <LoginDialog/>
+  </div>
 </template>
 <script lang="ts" setup>
     definePageMeta({

@@ -17,18 +17,18 @@
             <div  class="space-y-2 flex items-center justify-center flex-col">
                 <div class="flex flex-col w-full">
                     <label for="name" >Email</label>
-                    <input id="name" class="outline-none text-black rounded-sm px-2" type="text">
+                    <input id="name" v-model="login.email" class="outline-none text-black rounded-sm px-2" type="text">
                 </div>
                 <div class="flex flex-col w-full">
                     <label for="email">Senha</label>
-                    <input  id="email" class="outline-none text-black rounded-sm px-2" type="text">
+                    <input  id="email" v-model="login.password"class="outline-none text-black rounded-sm px-2" type="password">
                 </div>
             </div>
               
             <DialogFooter>
                 <div class="flex w-full justify-end space-x-3">
                     <button @click="navigatePage('index')"  class="w-max active:scale-95 text-white px-2 bg-red-600 uppercase rounded-md">cancelar</button>
-                    <button class="w-max active:scale-95 text-white px-2 bg-green-600 uppercase rounded-md">Login</button>
+                    <button @click="clickLogin()" class="w-max active:scale-95 text-white px-2 bg-green-600 uppercase rounded-md">Login</button>
                 </div>     
             </DialogFooter>
         </DialogContent>
@@ -37,7 +37,15 @@
 
 <script lang="ts" setup>
 const use_modal = useModal()
+const use_user = userModal()
+const login = ref({
+    email: '', 
+    password:''
+})
 
+const clickLogin = () =>{
+    use_user.loginUser(login.value.email, login.value.password)
+}
 const navigatePage = (page: string) =>{
     return navigateTo({
         name: page

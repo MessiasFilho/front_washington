@@ -10,6 +10,9 @@ export interface createUserFisica {
     confpassword: string, 
 }
 
+interface token {
+    accessToken: string
+}
 export interface createUserJuridica extends createUserFisica {
     cnpj: ''
 }
@@ -42,6 +45,22 @@ export const userModal = defineStore('users',{
             }
         },
         
+        async loginUser( email: string, password: string){
+            const {data, error } = await useFetch<token>('auth/login',{
+                method: 'post',
+                baseURL: useRuntimeConfig().public.backend, 
+                body:  {
+                    email, password
+                }
+            })
+                if (error.value){
+                    console.log(error);
+                } 
+                if(data.value){                     
+                   localStorage.setItem('login', String(data.value.accessToken) )
+                }
+        },
+
         async UserJuridica(user: createUserJuridica){ 
             const {data, error} = await useFetch<createUserJuridica>('auth/legal',{
                 method: 'post', 

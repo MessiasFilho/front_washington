@@ -19,13 +19,15 @@
               Situado na Av Whashington Soares 855, o edifício proporciona fácil acesso aos principais pontos da cidade, incluindo áreas de negócios, hotéis e transportes públicos.
             </span>
         </div>
-      <div class=" flex overflow-x-auto w-full px-2 ">
-          <div @click="openMeeting()" class="p-2 rounded-lg shadow-2xl  bg-[var(--card-color)] border cursor-pointer active:scale-95">
-                <div class="hover:scale-105 flex flex-col items-center">
-                  <div class=" flex justify-center items-center ">
-                    <img class="rounded-md w-32" src="../assets/image/reunia.jpeg" alt="reuniao">
-                  </div>
-                      <span class=" text-sm">Marcar Reunião</span>
+        <div v-if="use_user.loged.role === 'users'">
+          <div class=" flex overflow-x-auto w-full px-2 ">
+              <div @click="openMeeting()" class="p-2 rounded-lg shadow-2xl  bg-[var(--card-color)] border cursor-pointer active:scale-95">
+                    <div class="hover:scale-105 flex flex-col items-center">
+                      <div class=" flex justify-center items-center ">
+                        <img class="rounded-md w-32" src="../assets/image/reunia.jpeg" alt="reuniao">
+                      </div>
+                          <span class=" text-sm">Marcar Reunião</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -61,19 +63,21 @@
 
 <script lang="ts" setup>
 const use_modal = useModal()
-
-
+const use_user =  userModal()
 const img = ref(
   {image:''}
 )
 
 const openMeeting = () =>{ 
+  console.log('oi');
+  
   use_modal.marc = true
 }
 
 definePageMeta({
    name: 'index'
 })
+
 </script>
 
 <style scoped>

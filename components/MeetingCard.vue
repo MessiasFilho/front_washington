@@ -17,10 +17,10 @@
                 <div class="w-full">
                 </div>
                 <div class="text-black space-x-2 flex items-center justify-center">
-                    <input type="datetime-local">
+                    <input v-model="data" type="datetime-local">
                 </div>
             <DialogFooter class="flex items-center">
-                <button class="w-max active:scale-95 text-white px-2 bg-green-600 uppercase rounded-md">confirmar</button>
+                <button @click="clickConfirm()" class="w-max active:scale-95 text-white px-2 bg-green-600 uppercase rounded-md">confirmar</button>
             </DialogFooter>
         </DialogContent>
   </Dialog>
@@ -28,7 +28,18 @@
 
 <script lang="ts" setup>
 const use_modal = useModal()
+const use_users = userModal()
+const data = ref()
 
+const clickConfirm = () => {
+    console.log(data.value);
+    
+   if (!data.value){
+        return alert('sem data ')
+   }
+   use_users.createAgenda(data.value)
+    
+}
 </script>
 
 <style>

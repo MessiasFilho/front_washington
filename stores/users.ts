@@ -19,6 +19,11 @@ export interface usersInterface extends userInterface {
     role: string, 
 }
 
+export interface responses {
+    message: string, 
+    valid: string
+}
+
 export const userModal = defineStore('users',{
     state: () =>({
        loged: {} as usersInterface ,
@@ -27,7 +32,7 @@ export const userModal = defineStore('users',{
     actions:{
 
         async loginUser( email: string, password: string){
-            const {data, error } = await useFetch<token>('auth/login',{
+            const {data, error, pending } = await useFetch<token>('auth/login',{
                 method: 'post',
                 baseURL: useRuntimeConfig().public.backend, 
                 body:  {
@@ -46,6 +51,7 @@ export const userModal = defineStore('users',{
                         name: 'index'
                     })
                 }
+              
         },
 
         async getuser(){
@@ -57,7 +63,7 @@ export const userModal = defineStore('users',{
                 }
              })
              if(error.value){
-                // console.log(error.value);
+                console.log(error.value);
              }
              if (data.value){
                this.loged = data.value
@@ -68,7 +74,7 @@ export const userModal = defineStore('users',{
         }, 
 
         async createUser(user: userInterface){ 
-            const {data, error} = await useFetch<token>('auth/register',{
+            const {data, error} = await useFetch<responses>('auth/register',{
                 method: 'POST', 
                 baseURL: useRuntimeConfig().public.backend, 
                 body:{
@@ -79,13 +85,11 @@ export const userModal = defineStore('users',{
                 return console.log(error.value);
             }
             if(data.value){
-                localStorage.setItem('login', String(data.value.accessToken))
-                this.getuser()
-                navigateTo({
-                    name: 'index'
-                })
                 
+               return data.value
             }
+            
+        
         },
     } 
 })

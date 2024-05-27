@@ -19,7 +19,7 @@
               Situado na Av Whashington Soares 855, o edifício proporciona fácil acesso aos principais pontos da cidade, incluindo áreas de negócios, hotéis e transportes públicos.
             </span>
         </div>
-        <div v-if="use_user.loged.role === 'users'">
+        <div v-if="use_user.loged.role == 'users'">
           <div class=" flex overflow-x-auto w-full px-2 ">
               <div @click="openMeeting()" class="p-2 rounded-lg shadow-2xl  bg-[var(--card-color)] border cursor-pointer active:scale-95">
                     <div class="hover:scale-105 flex flex-col items-center">
@@ -70,8 +70,6 @@ const openMeeting = () =>{
 
 onMounted( async () =>{
   const login = localStorage.getItem('login')
-  console.log(login);
-  
   if (!login) return
 
   use_user.getuser()

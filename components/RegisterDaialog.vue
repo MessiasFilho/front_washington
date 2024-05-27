@@ -12,7 +12,7 @@
                 </div>
                 <DialogDescription>
                     <Select v-model:model-value="pessoa">
-                        <code>{{ pessoa }}</code>
+                       
                         <SelectTrigger class="w-[180px]">
                             <SelectValue placeholder="Fisica" />
                         </SelectTrigger>
@@ -100,9 +100,9 @@
 
 <script lang="ts" setup>
 
-import type { userInterface } from '~/stores/users';
+import type { responses, userInterface } from '~/stores/users';
 
-const pessoa = ref('Juridica')
+const pessoa = ref('Fisica')
 const use_modal = useModal()
 const use_user = userModal()
 const load = ref(true)
@@ -120,7 +120,7 @@ const user = ref<userInterface>({
 
 const createUser = async () =>{
     
-    return use_user.createUser({
+    const resp  = <responses> await use_user.createUser({
         name: user.value.name, 
         cnpj: user.value.cnpj, 
         cpf: user.value.cpf, 
@@ -130,6 +130,11 @@ const createUser = async () =>{
         password: user.value.password, 
         confpassword: user.value.confpassword
     })
+    console.log(resp.valid);
+    
+    if (resp.valid){
+        await use_user.loginUser(user.value.email, user.value.password)
+    }
     
 }
 

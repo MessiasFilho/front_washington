@@ -69,6 +69,11 @@ const openMeeting = () =>{
 }
 
 onMounted( async () =>{
+  const login = localStorage.getItem('login')
+  console.log(login);
+  
+  if (!login) return
+
   use_user.getuser()
 })
 </script>

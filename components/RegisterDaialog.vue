@@ -11,7 +11,8 @@
                     </div>
                 </div>
                 <DialogDescription>
-                    <Select v-model:modelValue="pessoa">
+                    <Select v-model:model-value="pessoa">
+                        <code>{{ pessoa }}</code>
                         <SelectTrigger class="w-[180px]">
                             <SelectValue placeholder="Fisica" />
                         </SelectTrigger>
@@ -62,31 +63,28 @@
                     <div  class="space-y-2 flex items-center justify-center flex-col">
                         <div class="flex flex-col w-full">
                             <label for="name" >Nome</label>
-                            <input v-model="userJuridica.name" id="name" class="outline-none text-black rounded-sm px-2" type="text">
+                            <input v-model="user.name" id="name" class="outline-none text-black rounded-sm px-2" type="text">
                         </div>
                         <div class="flex flex-col w-full">
                             <label for="email">G-mail</label>
-                            <input v-model="userJuridica.email" id="email" class="outline-none text-black rounded-sm px-2" type="text">
+                            <input v-model="user.email" id="email" class="outline-none text-black rounded-sm px-2" type="text">
                         </div>
-                        <div class="flex flex-col w-full">
-                            <label for="cpf">CPF</label>
-                            <input v-model="userJuridica.cpf" id="cpf" class="outline-none text-black rounded-sm px-2" type="text">
-                        </div>
+                      
                         <div  class="flex flex-col w-full">
                             <label for="cnpj">CNPJ</label>
-                            <input v-model="userJuridica.cnpj" id="cnpj" class="outline-none text-black rounded-sm px-2" type="text">
+                            <input v-model="user.cnpj" id="cnpj" class="outline-none text-black rounded-sm px-2" type="text">
                         </div>
                         <div class="flex flex-col w-full">
                             <label for="telefone">telefone</label>
-                            <input v-model="userJuridica.fone" id="telefone" class="outline-none text-black rounded-sm px-2" type="tel">
+                            <input v-model="user.fone" id="telefone" class="outline-none text-black rounded-sm px-2" type="tel">
                         </div>
                         <div class="flex flex-col w-full">
                             <label for="senha">senha</label>
-                            <input v-model="userJuridica.password" id="senha" class="outline-none text-black rounded-sm px-2" type="password">
+                            <input v-model="user.password" id="senha" class="outline-none text-black rounded-sm px-2" type="password">
                         </div>
                         <div class="flex flex-col w-full">
                             <label for="confir">confirmar senha</label>
-                            <input v-model="userJuridica.confpassword" id="confir" class="outline-none text-black rounded-sm px-2" type="password">
+                            <input v-model="user.confpassword" id="confir" class="outline-none text-black rounded-sm px-2" type="password">
                         </div>
                     </div>
                 </template>
@@ -101,51 +99,38 @@
 </template>
 
 <script lang="ts" setup>
-import type { createUserFisica, createUserJuridica } from '~/stores/users';
 
-const pessoa = ref('Fisica')
+import type { userInterface } from '~/stores/users';
+
+const pessoa = ref('Juridica')
 const use_modal = useModal()
 const use_user = userModal()
 const load = ref(true)
 
-const user = ref<createUserFisica>({ 
+const user = ref<userInterface>({ 
     name: '', 
     email: '', 
     fone: '',
-    pessoa: pessoa.value,
+    pessoa: '',
     cpf: '', 
     password: '', 
-    confpassword: ''
-})
-const userJuridica = ref<createUserJuridica>({ 
-    name: '', 
-    email: '', 
-    fone: '',
-    pessoa: pessoa.value,
-    cpf: '', 
+    confpassword: '',
     cnpj:'',
-    password: '', 
-    confpassword: ''
 })
-
 
 const createUser = async () =>{
-    if( pessoa.value == 'Fisica'){
-      const data =  await use_user.createUser(user.value)
-        
-        
-    }else{
-        await use_user.UserJuridica({
-            name: userJuridica.value.name, 
-            email: userJuridica.value.email, 
-            fone: userJuridica.value.fone, 
-            pessoa: pessoa.value, 
-            cpf: userJuridica.value.cpf, 
-            cnpj: userJuridica.value.cnpj, 
-            password: userJuridica.value.password, 
-            confpassword: userJuridica.value.confpassword
-        })
-    }
+    
+    return use_user.createUser({
+        name: user.value.name, 
+        cnpj: user.value.cnpj, 
+        cpf: user.value.cpf, 
+        email: user.value.email, 
+        pessoa: pessoa.value, 
+        fone: user.value.fone, 
+        password: user.value.password, 
+        confpassword: user.value.confpassword
+    })
+    
 }
 
 const navigatePage = (page: string) =>{

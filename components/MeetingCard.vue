@@ -30,7 +30,7 @@
 
 <script lang="ts" setup>
 const use_modal = useModal()
-const use_users = userModal()
+const use_agenda = useAgenda()
 const data = ref()
 
 const clickConfirm = () => {
@@ -39,7 +39,7 @@ const clickConfirm = () => {
    if (!data.value){
         return alert('sem data ')
    }
-   use_users.createAgenda(data.value)
+   use_agenda.createAgenda(data.value)
     
 }
 </script>

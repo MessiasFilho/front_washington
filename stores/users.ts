@@ -1,30 +1,28 @@
 import { defineStore } from "pinia";
 
-export interface createUserFisica { 
+export interface userInterface { 
     name: string, 
     email: string, 
     fone: string, 
     pessoa: string,
+    cnpj: string
     cpf: string,
     password: string, 
     confpassword: string, 
 }
-interface token {
+interface token  {
     accessToken: string
 }
-export interface createUserJuridica extends createUserFisica {
-    cnpj: ''
-}
-export interface usersInterface extends createUserFisica {
+
+export interface usersInterface extends userInterface {
     id: number,
     role: string, 
-    agendas: []
 }
 
 export const userModal = defineStore('users',{
     state: () =>({
        loged: {} as usersInterface ,
-       users: [] as createUserFisica[]
+       users: [] as userInterface[]
     }),
     actions:{
 
@@ -59,7 +57,7 @@ export const userModal = defineStore('users',{
                 }
              })
              if(error.value){
-                console.log(error.value);
+                // console.log(error.value);
              }
              if (data.value){
                this.loged = data.value
@@ -67,45 +65,10 @@ export const userModal = defineStore('users',{
             if (pending.value){
                 this.getuser()
             }
-
         }, 
 
-        async createAgenda ( date: string ){
-            const {data, error } = await useFetch('auth/agendar', {
-                method: 'post', 
-                baseURL: useRuntimeConfig().public.backend, 
-                body: { date}, 
-                headers:{
-                    Authorization: `Bearer ${localStorage.getItem('login')}`
-                }
-            })
-                if (error.value){
-                     console.log(error.value);
-                }
-                if ( data.value){
-                    console.log(data.value);
-                }
-        }, 
-
-        async UserJuridica(user: createUserJuridica){ 
-            const {data, error} = await useFetch<createUserJuridica>('auth/legal',{
-                method: 'post', 
-                baseURL: useRuntimeConfig().public.backend, 
-                body:{
-                    ...user
-                }
-            })
-            if(error.value){
-                return console.log(error.value);
-            }
-            
-            if(data.value){
-                
-                console.log( data.value);
-            }
-        },
-        async createUser(user: createUserFisica){ 
-            const {data, error} = await useFetch<createUserFisica>('auth/register',{
+        async createUser(user: userInterface){ 
+            const {data, error} = await useFetch<token>('auth/register',{
                 method: 'POST', 
                 baseURL: useRuntimeConfig().public.backend, 
                 body:{
@@ -115,10 +78,13 @@ export const userModal = defineStore('users',{
             if(error.value){
                 return console.log(error.value);
             }
-            
             if(data.value){
+                localStorage.setItem('login', String(data.value.accessToken))
+                this.getuser()
+                navigateTo({
+                    name: 'index'
+                })
                 
-                console.log( data.value);
             }
         },
     } 

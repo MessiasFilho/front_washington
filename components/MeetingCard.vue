@@ -11,7 +11,9 @@
                     </div>
                 </div>
                 <DialogDescription>
-                    Veja horarios disponiveis é marque a sua reunião 
+                <div class="h-[300px] flex">
+                    <ListSchedule/>
+                </div>
                 </DialogDescription>
             </DialogHeader>
                 <div class="w-full">

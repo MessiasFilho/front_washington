@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   
   runtimeConfig: { 
     public:{
-      backend: 'http://localhost:3001/' 
+      backend: 'http://192.168.1.10:3001/' 
     }
   }, 
 

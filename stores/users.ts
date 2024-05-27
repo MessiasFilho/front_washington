@@ -17,7 +17,8 @@ export interface createUserJuridica extends createUserFisica {
 }
 export interface usersInterface extends createUserFisica {
     id: number,
-    role: string
+    role: string, 
+    agendas: []
 }
 
 export const userModal = defineStore('users',{
@@ -42,11 +43,15 @@ export const userModal = defineStore('users',{
                 if(data.value){                     
                     localStorage.setItem('login', String(data.value.accessToken))
                     this.getuser()
+
+                    navigateTo({
+                        name: 'index'
+                    })
                 }
         },
 
         async getuser(){
-             const { data, error} = await useFetch<usersInterface>('auth',{
+             const { data, error , pending} = await useFetch<usersInterface>('auth',{
                 method: 'get', 
                 baseURL: useRuntimeConfig().public.backend, 
                 headers: {
@@ -59,6 +64,10 @@ export const userModal = defineStore('users',{
              if (data.value){
                this.loged = data.value
             }
+            if (pending.value){
+                this.getuser()
+            }
+
         }, 
 
         async createAgenda ( date: string ){

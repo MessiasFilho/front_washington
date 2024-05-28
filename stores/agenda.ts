@@ -4,7 +4,6 @@ export interface agendaInterface {
     date: string
 }
 
-
 export const useAgenda = defineStore('agenda', {
     state : () =>({
         agendas : [] as agendaInterface[]
@@ -21,7 +20,7 @@ export const useAgenda = defineStore('agenda', {
                 console.log(error.value);
             }
             if(data.value){
-                return this.agendas = data.value
+                this.agendas = data.value
             }
         }, 
 
@@ -38,6 +37,7 @@ export const useAgenda = defineStore('agenda', {
                      console.log(error.value);
                 }
                 if ( data.value){
+                    this.getAgendas()
                     console.log(data.value);
                 }
         }, 

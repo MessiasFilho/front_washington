@@ -11,12 +11,14 @@
                     </TableRow>
                 </TableHeader>
                 <TableBody class=" overflow-y-auto  snap-y">
-                    <TableRow v-for="i in 20" >
+                    <TableRow v-for=" agenda in use_agenda.agendas" :key="a"  >
                             <TableCell class="font-medium">
-                                <div> maria</div>
+                                <div>
+                                    {{ agenda.name }}
+                                </div>
                             </TableCell>
                             <TableCell class="font-medium flex ">
-                                <div> 10/03/1545</div>
+                                <div> {{ agenda.date }}</div>
                             </TableCell>
                     </TableRow>
                 </TableBody>
@@ -25,9 +27,11 @@
 
 <script setup>
 
-const agenda = ref({
-    nome: '', 
-    data: ''
+const use_agenda = useAgenda()
+
+
+onMounted( async () =>{
+    await use_agenda.getAgendas()
 })
 
 </script>

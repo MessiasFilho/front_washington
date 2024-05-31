@@ -1,5 +1,6 @@
 export interface agendaInterface {
     id: number, 
+    userId: number,
     name: string, 
     date: string
 }
@@ -41,6 +42,25 @@ export const useAgenda = defineStore('agenda', {
                     console.log(data.value);
                 }
         }, 
+
+        async deleteAgenda(id: number){
+
+            const {data, error} = await useFetch(`auth/deleteagenda/${id}`,{
+                method: 'delete', 
+                baseURL: useRuntimeConfig().public.backend, 
+                headers:{ 
+                    Authorization: `Bearer ${localStorage.getItem('login')}`
+                }
+            })
+            if (error.value){
+                console.log(error);
+            }
+            if (data.value){
+                this.getAgendas()
+                console.log(data);
+                
+            }
+        }
 
 
     }

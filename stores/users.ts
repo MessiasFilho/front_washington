@@ -11,7 +11,8 @@ export interface userInterface {
     confpassword: string, 
 }
 interface token  {
-    accessToken: string
+    message: string
+    token: string
 }
 
 export interface usersInterface extends userInterface {
@@ -21,7 +22,8 @@ export interface usersInterface extends userInterface {
 
 export interface responses {
     message: string, 
-    valid: string
+    valid: Boolean
+    
 }
 
 export const userModal = defineStore('users',{
@@ -30,9 +32,8 @@ export const userModal = defineStore('users',{
        users: [] as userInterface[]
     }),
     actions:{
-
         async loginUser( email: string, password: string){
-            const {data, error, pending } = await useFetch<token>('auth/login',{
+            const {data, error } = await useFetch<token>('auth/login',{
                 method: 'post',
                 baseURL: useRuntimeConfig().public.backend, 
                 body:  {
@@ -40,22 +41,20 @@ export const userModal = defineStore('users',{
                 }
             })
                 if (error.value){
-                    console.log(error);
-                    alert('error')
+                  toastModal().createToast('Error', String(error.value.data?.error), "red", "error")
                 } 
-                if(data.value){                     
-                    localStorage.setItem('login', String(data.value.accessToken))
-                    this.getuser()
-
-                    navigateTo({
-                        name: 'index'
-                    })
-                }
-              
+                if(data.value){              
+                    const {token , message}  = data.value
+                     localStorage.setItem('login', String(token))
+                     this.getuser()
+                     navigateTo({
+                         name: 'index'
+                        })
+                    toastModal().createToast('Sucess', String(data.value.message), "green","success")
+                }  
         },
-
         async getuser(){
-             const { data, error , pending} = await useFetch<usersInterface>('auth',{
+             const { data, error , pending} = await useFetch<usersInterface>('auth/user',{
                 method: 'get', 
                 baseURL: useRuntimeConfig().public.backend, 
                 headers: {
@@ -66,13 +65,14 @@ export const userModal = defineStore('users',{
                 console.log(error.value);
              }
              if (data.value){
+                console.log(data.value);
+                
                this.loged = data.value
             }
             if (pending.value){
                 this.getuser()
             }
         }, 
-
         async createUser(user: userInterface){ 
             const {data, error} = await useFetch<responses>('auth/register',{
                 method: 'POST', 
@@ -82,14 +82,12 @@ export const userModal = defineStore('users',{
                 }
             })
             if(error.value){
-                return console.log(error.value);
+                toastModal().createToast('Error', String(error.value.data?.error), "red", "error")
             }
             if(data.value){
-                
-               return data.value
+                const {valid} =  data.value
+                 return valid
             }
-            
-        
         },
     } 
 })

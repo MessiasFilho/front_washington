@@ -120,7 +120,7 @@ const user = ref<userInterface>({
 
 const createUser = async () =>{
     
-    const resp  = <responses> await use_user.createUser({
+    const  resp = await use_user.createUser({
         name: user.value.name, 
         cnpj: user.value.cnpj, 
         cpf: user.value.cpf, 
@@ -130,11 +130,14 @@ const createUser = async () =>{
         password: user.value.password, 
         confpassword: user.value.confpassword
     })
-    console.log(resp.valid);
     
-    if (resp.valid){
+    
+    if (resp){
+        console.log('oi');
+        
         await use_user.loginUser(user.value.email, user.value.password)
     }
+    
     
 }
 

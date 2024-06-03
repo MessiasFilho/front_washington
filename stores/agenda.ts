@@ -1,13 +1,18 @@
+
 export interface agendaInterface {
     id: number, 
     userId: number,
     name: string, 
     date: string
 }
+interface response {
+    message: string
+}
 
 export const useAgenda = defineStore('agenda', {
     state : () =>({
-        agendas : [] as agendaInterface[]
+    agendas : [] as agendaInterface[]
+
     }), 
     actions: {
         async getAgendas(){
@@ -19,33 +24,37 @@ export const useAgenda = defineStore('agenda', {
 
             if(error.value){
                 console.log(error.value);
+              
             }
             if(data.value){
                 this.agendas = data.value
             }
         }, 
 
-        async createAgenda ( date: string ){
-            const {data, error } = await useFetch('auth/agendar', {
+        async createAgenda ( date: string ) {
+         
+           
+            const {data, error } = await useFetch<response>('auth/agendar', {
                 method: 'post', 
                 baseURL: useRuntimeConfig().public.backend, 
-                body: { date}, 
+                body: {date}, 
                 headers:{
                     Authorization: `Bearer ${localStorage.getItem('login')}`
                 }
             })
                 if (error.value){
-                     console.log(error.value);
+                     const  agend = error.value.data?.error
+                    toastModal().createToast('error', String(agend), "red", "error")
                 }
                 if ( data.value){
                     this.getAgendas()
-                    console.log(data.value);
+                   toastModal().createToast('sucesso', String(data.value.message), "green", "success" )
                 }
         }, 
 
         async deleteAgenda(id: number){
 
-            const {data, error} = await useFetch(`auth/deleteagenda/${id}`,{
+            const {data, error} = await useFetch<response>(`auth/deleteagenda/${id}`,{
                 method: 'delete', 
                 baseURL: useRuntimeConfig().public.backend, 
                 headers:{ 
@@ -53,12 +62,14 @@ export const useAgenda = defineStore('agenda', {
                 }
             })
             if (error.value){
-                console.log(error);
+                toastModal().createToast('error', String(error.value.data?.error), "red", "error")
             }
+
             if (data.value){
-                this.getAgendas()
-                console.log(data);
+                toastModal().createToast('Sucesso', String(data.value.message), "red", "success")
                 
+                this.getAgendas()
+
             }
         }
 

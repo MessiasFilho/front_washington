@@ -34,8 +34,6 @@ const use_agenda = useAgenda()
 const data = ref()
 
 const clickConfirm = () => {
-    console.log(data.value);
-    
    if (!data.value){
         return alert('sem data ')
    }

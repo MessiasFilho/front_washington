@@ -2,7 +2,10 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
   modules: ['@nuxtjs/tailwindcss', 'shadcn-nuxt', '@pinia/nuxt'],
-  
+  build: {
+    transpile: ['vue-sonner']
+  },
+
   runtimeConfig: { 
     public:{
       backend: 'http://192.168.1.10:3001/' 

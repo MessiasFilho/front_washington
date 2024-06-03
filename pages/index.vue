@@ -63,8 +63,7 @@ const use_user =  userModal()
 const img = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwv0Er9beNEerN6Dul44ynAkc3rInYYDJecRZgpUQYGw&s'
 
 const openMeeting = () =>{ 
-  console.log('oi');
-  
+
   use_modal.marc = true
 }
 

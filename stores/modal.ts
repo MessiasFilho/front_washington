@@ -3,6 +3,7 @@ export const useModal = defineStore('modal', {
     state: () =>({
         marc:false, 
         register: true, 
-        login: true
+        login: true,
+        leftMenu: false
     })
 })

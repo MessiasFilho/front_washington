@@ -16,7 +16,7 @@ export const useAgenda = defineStore('agenda', {
     }), 
     actions: {
         async getAgendas(){
-            const {data, error } = await useFetch<agendaInterface[]>('auth/listagenda', {
+            const {data, error } = await useFetch<agendaInterface[]>('schedule/list', {
                 method: 'get', 
                 baseURL: useRuntimeConfig().public.backend,
                 headers: { Authorization: `Bearer ${localStorage.getItem('login')}`}
@@ -32,9 +32,7 @@ export const useAgenda = defineStore('agenda', {
         }, 
 
         async createAgenda ( date: string ) {
-         
-           
-            const {data, error } = await useFetch<response>('auth/agendar', {
+            const {data, error } = await useFetch<response>('schedule/create', {
                 method: 'post', 
                 baseURL: useRuntimeConfig().public.backend, 
                 body: {date}, 
@@ -54,7 +52,7 @@ export const useAgenda = defineStore('agenda', {
 
         async deleteAgenda(id: number){
 
-            const {data, error} = await useFetch<response>(`auth/deleteagenda/${id}`,{
+            const {data, error} = await useFetch<response>(`schedule/delete/${id}`,{
                 method: 'delete', 
                 baseURL: useRuntimeConfig().public.backend, 
                 headers:{ 

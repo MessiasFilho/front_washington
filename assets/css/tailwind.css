@@ -34,6 +34,9 @@
     --ring: 224 71.4% 4.1%;
  
     --radius: 0.5rem;
+
+    --color-button: #112037;
+
   }
  
   .dark {

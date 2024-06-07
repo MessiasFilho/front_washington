@@ -23,13 +23,22 @@ export interface usersInterface extends userInterface {
 export interface responses {
     message: string, 
     valid: Boolean
-    
 }
+interface agenda {
+    name: string, 
+    date: string, 
+    screated_at: string
+}
+export interface allDates extends usersInterface {
+    agedas: agenda[], 
+}
+
 
 export const userModal = defineStore('users',{
     state: () =>({
        loged: {} as usersInterface ,
-       users: [] as userInterface[]
+       users: [] as userInterface[], 
+       allDate: [] as allDates[]
     }),
     actions:{
         async loginUser( email: string, password: string){
@@ -65,7 +74,6 @@ export const userModal = defineStore('users',{
                 console.log(error.value);
              }
              if (data.value){
-                console.log(data.value);
                 
                this.loged = data.value
             }
@@ -73,6 +81,25 @@ export const userModal = defineStore('users',{
                 this.getuser()
             }
         }, 
+
+        async showUsers(){
+                const {data, error} = await useFetch<allDates[]>('auth/showusers', {
+                    method: 'get', 
+                    baseURL: useRuntimeConfig().public.backend, 
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('login')}`
+                    }
+                })
+
+                if (error.value){
+                    console.log(error.value);
+                }
+
+                if(data.value){
+                    this.allDate = data.value
+                }
+        },
+
         async createUser(user: userInterface){ 
             const {data, error} = await useFetch<responses>('auth/register',{
                 method: 'POST', 

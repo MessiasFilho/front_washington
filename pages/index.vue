@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full flex flex-col ">
     <div class="relative  ">
-        <div class="relative pb-1 ">
+        <div class="relative pb-1 flex justify-center ">
             <img class="xl:h-[28rem] xl:w-[100rem] " src="../assets/image/tumbrl.jpg" alt="root">
             <div class="h-20 absolute bg-gradient-to-b from-transparent to-[var(--gradient)] filter blur-[1px] w-full bottom-0"></div>  
         </div>
@@ -19,7 +19,7 @@
               Situado na Av Whashington Soares 855, o edifício proporciona fácil acesso aos principais pontos da cidade, incluindo áreas de negócios, hotéis e transportes públicos.
             </span>
         </div>
-        <div v-if="use_user.loged.role == 'users'">
+        <div v-if="verifUser">
           <div class=" flex overflow-x-auto w-full px-2 ">
               <div @click="openMeeting()" class="p-2 rounded-lg shadow-2xl  bg-[var(--card-color)] border cursor-pointer active:scale-95">
                     <div class="hover:scale-105 flex flex-col items-center">
@@ -31,8 +31,13 @@
                 </div>
             </div>
         </div>
-       <div class="p-2">
-        <span>Noticias</span>
+       <div class="p-2 flex flex-col">
+         <span>Noticias</span>
+          <div v-if="image">
+            <img :src="image" alt="selected">
+          </div>
+          <label for="imgge"> adicionar imagem</label>
+          <input class="hidden" id="imgge" type="file" @change="onFileChange" >
           <div>
             queda de energia 
           </div>
@@ -57,13 +62,29 @@ definePageMeta({
    name: 'index'
 })
 
-
 const use_modal = useModal()
 const use_user =  userModal()
 const img = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwv0Er9beNEerN6Dul44ynAkc3rInYYDJecRZgpUQYGw&s'
 
-const openMeeting = () =>{ 
+const image = ref<string | null>()
 
+const onFileChange = (e: Event) =>{
+  const target = e.target as HTMLInputElement
+  const file = target.files?.[0]
+  if (file) {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      image.value = (e.target as FileReader).result as string
+    }
+    reader.readAsDataURL(file)
+  }
+}
+
+const verifUser = computed(() => { 
+  return use_user.loged.role === 'users' || use_user.loged.role === 'admin'  
+})
+
+const openMeeting = () =>{ 
   use_modal.marc = true
 }
 

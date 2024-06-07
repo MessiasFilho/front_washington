@@ -3,7 +3,10 @@ export interface agendaInterface {
     id: number, 
     userId: number,
     name: string, 
-    date: string
+    email: string, 
+    fone: string,
+    date: string,
+    screated_at: string
 }
 interface response {
     message: string

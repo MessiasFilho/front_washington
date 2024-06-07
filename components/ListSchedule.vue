@@ -1,27 +1,27 @@
 <template>
-        <Table>
+        <Table class="bg-[var(--color-button)] rounded-sm">
                 <TableHeader>
                     <TableRow>
                         <TableHead class="w-[100px]">
-                            <span>Nome</span>
+                            <span class="text-white">Nome</span>
                         </TableHead>
                         <TableHead class="w-[100px]">
-                            <span>Agendado</span>
+                            <span class="text-white">Agendado</span>
                         </TableHead>
                         <TableHead class="w-[100px]">
-                            <span>Delete</span>
+                            <span class="text-white">Delete</span>
                         </TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody class=" overflow-y-auto  snap-y">
-                    <TableRow v-for=" agenda in use_agenda.agendas"   >
-                            <TableCell class="font-medium">
+                    <TableRow v-for=" agenda in use_agenda.agendas" class=""  >
+                            <TableCell class="font-medium ">
                                 <div class="flex ">
-                                    {{ agenda.name }}
+                                    <span class="text-white">{{ agenda.name }}</span>
                                 </div>
                             </TableCell>
-                            <TableCell class="font-medium flex ">
-                                <div class="text-[.7rem] whitespace-nowrap"> {{ agenda.date }}</div>
+                            <TableCell class="font-medium flex">
+                                <div class="text-[.8rem] whitespace-nowrap text-white"> {{ agenda.date }}</div>
                             </TableCell>
                             <TableCell>
                                 <div v-if="use_user.loged.id == agenda.userId">

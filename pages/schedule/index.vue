@@ -1,58 +1,57 @@
 <template>
-    <div class="w-full h-full mb-4 p-2">
-        <div>
-            <span>Editar Clientes</span>
-        </div>
-        <Table class="bg-[var(--color-button)] rounded-sm">
+  <div class="w-full h-full p-2"> 
+    <span>Editar Agendas  </span>
+    <Table>
             <!-- <TableCaption>A list of your recent invoices.</TableCaption> -->
             <TableHeader>
                 <TableRow>
                     <TableHead class="w-[100px]">
                     Cliente
                     </TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Telefone</TableHead>
-                    <TableHead class="text-right">
-                        Pessoa
+                    <TableHead>
+                        Email
+                    </TableHead>
+                    <TableHead>
+                        Telefone
                     </TableHead>
                     <TableHead class="text-left">
-                        CPF
+                        Agenda
                     </TableHead>
                     <TableHead class="text-left">
-                        CNPJ
+                        Criado
                     </TableHead>
-                    
+                  
                     <TableHead class="text-center">
                         Editar
                     </TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
-                <TableRow v-for="alldate in userModal().allDate" :key="alldate.id" class="">
+                <TableRow v-for="schedule in useAgenda().agendas" class="">
                     <TableCell class="font-medium">
-                        {{ alldate.name }}
+                        {{ schedule.name }}
                     </TableCell>
                     <TableCell>
-                        {{ alldate.email }}
+                       {{ schedule.email }}
                     </TableCell>
                     <TableCell>
-                        {{ alldate.fone }}
+                       {{ schedule.fone }}
                     </TableCell>
                     <TableCell class="">
-                        {{ alldate.pessoa }}
+                        <div class="whitespace-nowrap">
+                            {{ schedule.date }}
+                        </div>
                     </TableCell>
-                    <TableCell class="">
-                        {{ alldate.cpf }}
+                    <TableCell class="whitespace-nowrap">
+                       {{ schedule.screated_at }}
                     </TableCell>
-                    <TableCell class="">
-                        {{ alldate.cnpj }}
-                    </TableCell>
+                  
                     <TableCell class="">
                         <div class="flex space-x-3 justify-center items-center">
                             <button class="active:scale-90  bg-[var(--color-button)] p-1 rounded-sm">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
                             </button>
-                            <button @click="deleteUser()" class="active:scale-90 bg-[var(--color-button)] p-1 rounded-sm">
+                            <button class="active:scale-90 bg-[var(--color-button)] p-1 rounded-sm">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1.7em" height="1.7em" viewBox="0 0 24 24"><path fill="currentColor" d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6z"/></svg>
                             </button>
                         </div>
@@ -61,34 +60,21 @@
                 </TableRow>
             </TableBody>
          </Table>
-    </div>
+  </div>
 </template>
 
-<script setup lang="ts">
-import Swal from 'sweetalert2';
+<script lang="ts" setup>
 
-const use_user = userModal()
-
-
-const deleteUser = () =>{
-   Swal.fire({
-    title:'deletar?',
-    background: '#112037', 
-    
-    
-    
-   })
-}
-
+const use_schedule = useAgenda()
 definePageMeta({
-    name: 'editclients'
+    name: 'schedule'
 })
 
 onMounted(() => {
-    use_user.showUsers()
+    use_schedule.getAgendas()
 })
 </script>
 
-<style scoped>
+<style>
 
 </style>

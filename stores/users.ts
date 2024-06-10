@@ -144,7 +144,7 @@ export const userModal = defineStore('users',{
                 method: 'PUT', 
                 baseURL: useRuntimeConfig().public.backend, 
                 headers: {Authorization: `Bearer ${localStorage.getItem('login')}`}, 
-                body: {user}
+                body: {...user}
             });
             if (error.value){
                 console.log(error.value);

@@ -1,23 +1,22 @@
 <template>
-    <div class="h-screen w-full p-3">
-       
-<Select v-model:model-value="pessoa">
-            <SelectTrigger class="w-[180px]">
-                <SelectValue placeholder="Fisica" />
-            </SelectTrigger>
-            <SelectContent>
-                <SelectGroup>
-                    <!-- <SelectLabel>Pessoa</SelectLabel> -->
-                    <SelectItem  value="Fisica" >
-                        Fisica
-                    </SelectItem> 
-                    <SelectItem value="Juridica">
-                        Juridica
-                    </SelectItem>
-                </SelectGroup>
-            </SelectContent>
-        </Select>
-        
+    <div class="h-screen w-full p-3 flex flex-col ">
+            <Select v-model:model-value="pessoa">
+                <SelectTrigger class="w-[180px]">
+                    <SelectValue placeholder="pessoa" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectGroup>
+                        <!-- <SelectLabel>Pessoa</SelectLabel> -->
+                        <SelectItem  value="Fisica" >
+                            Fisica
+                        </SelectItem> 
+                        <SelectItem value="Juridica">
+                            Juridica
+                        </SelectItem>
+                    </SelectGroup>
+                </SelectContent>
+            </Select>
+            
             <template v-if="pessoa == 'Fisica'">
                     <div  class="space-y-2 flex items-center justify-center flex-col">
                         <div class="flex flex-col w-full">
@@ -61,7 +60,10 @@
                         </div>
                     </div>
                 </template>
-                <button @click="clickUpdateUser()" class="p-2 bg-red-400">Click</button>
+        <div class=" mt-3 flex justify-end p-2 space-x-3">
+            <button @click="navigatePage('editclients')" class="px-1 rounded-sm  bg-red-500">Cancelar</button>
+            <button @click="clickUpdateUser()" class="px-1 rounded-sm  bg-green-600">Confirmar</button>
+        </div>
     </div>
 </template>
 
@@ -69,14 +71,15 @@
 import type { updateUser } from '~/stores/users';
 
 const route = useRoute()
+const use_user = userModal()
+const use_alert = alertModal()
+
+const pessoa = ref('')
+
 const {updated} = route.params
 definePageMeta({
     name: 'updated'
 })
-
-const pessoa = ref('Fisica')
-
-const use_user = userModal()
 
 const user = ref<updateUser>({ 
     name:'', 
@@ -87,21 +90,31 @@ const user = ref<updateUser>({
     cnpj:'',
 })
 
-onMounted(()=>{
-    userModal().showById(Number(updated))
-})
 
-const clickUpdateUser = () =>{
-   user.value = {
-        name: use_user.user.name, 
-        pessoa: use_user.user.pessoa, 
-        cnpj: use_user.user.cnpj, 
-        cpf: use_user.user.cpf, 
-        email: use_user.user.email, 
-        fone: use_user.user.fone
+const navigatePage = (page: string) =>{
+    navigateTo({
+        name: page,
+    })
+}
+onMounted( async ()=>{
+    await userModal().showById(Number(updated))
+      pessoa.value =  String(use_user.user.pessoa)
+    })
+    
+    const clickUpdateUser = () =>{
+        console.log(pessoa.value);
+        
+        user.value = {
+            name: use_user.user.name, 
+            pessoa: pessoa.value, 
+            cnpj: use_user.user.cnpj, 
+            cpf: use_user.user.cpf, 
+            email: use_user.user.email, 
+            fone: use_user.user.fone
     }
     
-    use_user.updateUser(Number(updated), user.value )    
+    
+    use_alert.updateAletr(Number(updated), user.value)    
 }
 
 

@@ -1,6 +1,7 @@
 <template>
   <MeetingCard/>
   <MenuAdmin/>
+  <UploadImages/>
   <div class="w-full flex flex-col items-center relative">
     <header class="w-full flex items-center flex-col z-10">
        <div class="w-full h-16 flex items-center p-2 ">
@@ -18,12 +19,12 @@
           </div>
        </div>
       </header>
-      <div class=" mb-3 w-full relative">
+      <div class=" mb-5 w-full relative">
           <div class="">
             <slot/>
           </div>
       </div>
-      <footer class="absolute bottom-0">
+      <footer class="bottom-0">
         
         teste
         <button class="hover:underline hover:text-red-500 p-1 text-sm">Entre em contato</button>

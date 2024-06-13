@@ -4,6 +4,7 @@ export const useModal = defineStore('modal', {
         marc:false, 
         register: true, 
         login: true,
-        leftMenu: false
+        leftMenu: false, 
+        upload: false
     })
 })

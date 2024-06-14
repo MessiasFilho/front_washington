@@ -6,18 +6,30 @@
                     <DialogTitle>
                         <span>Selecionar Imagens</span>
                     </DialogTitle>
-                    <div @click="use_modal.upload = false" class="cursor-pointer active:scale-90">
+                    <div @click="use_modal.upload = false , images = []" class="cursor-pointer active:scale-90">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 32 32"><path fill="currentColor" d="M16 2C8.2 2 2 8.2 2 16s6.2 14 14 14s14-6.2 14-14S23.8 2 16 2m0 26C9.4 28 4 22.6 4 16S9.4 4 16 4s12 5.4 12 12s-5.4 12-12 12"/><path fill="currentColor" d="M21.4 23L16 17.6L10.6 23L9 21.4l5.4-5.4L9 10.6L10.6 9l5.4 5.4L21.4 9l1.6 1.6l-5.4 5.4l5.4 5.4z"/></svg>
                     </div>
                 </div>
                 <DialogDescription>
-                    <div>
-                        <input type="file" @change="uploadImages" multiple />
-                        <div v-if="images.length">
-                        <h3>Uploaded Images:</h3>
-                        <div v-for="image in images" :key="image" class="image-container">
-                            <img :src="'data:image/jpeg;base64,' + image" :alt="image" width="200" />
-                        </div>
+                    <div class="flex justify-center items-center overflow-x-hidden">
+                        <label  v-if="!images.length" for="select">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="14rem" height="14rem" viewBox="0 0 24 24"><g fill="none"><path fill="currentColor" fill-opacity="0.25" fill-rule="evenodd" d="M7 7c0-.89 0-1.335-.268-1.623a1.07 1.07 0 0 0-.285-.213c-.351-.176-.742-.061-1.522.168C3.417 5.774 2.5 6.359 2.5 7s.917 1.226 2.425 1.668c.78.23 1.17.344 1.522.168c.1-.05.21-.131.285-.213C7 8.335 7 7.89 7 7m10 0c0 .89 0 1.335.268 1.623c.076.082.185.163.285.213c.351.176.742.061 1.522-.168C20.583 8.226 21.5 7.641 21.5 7s-.917-1.226-2.425-1.668c-.78-.23-1.17-.344-1.522-.168c-.1.05-.21.131-.285.213C17 5.665 17 6.11 17 7" clip-rule="evenodd"/><path fill="currentColor" fill-opacity="0.25" d="M5.96 15.316L3.5 18l4.466 1.218c.516.14.774.211 1.039.247c.264.035.531.035 1.066.035h4.05c.44 0 .659 0 .876-.024c.218-.024.432-.071.86-.166l3.643-.81l-1.122-1.87c-.418-.696-.626-1.044-.861-1.25a2 2 0 0 0-2.35-.21c-.269.16-.536.466-1.07 1.077c-.247.282-.37.422-.497.501a1 1 0 0 1-1.13-.05c-.119-.09-.23-.242-.45-.545l-.374-.515c-1.11-1.526-1.665-2.29-2.429-2.444a2 2 0 0 0-.568-.032c-.776.067-1.413.763-2.688 2.154"/><path stroke="currentColor" d="m3.5 18l2.46-2.684c1.276-1.391 1.913-2.087 2.69-2.154a2 2 0 0 1 .567.032c.764.154 1.319.918 2.429 2.444l.375.515c.22.303.33.455.449.544a1 1 0 0 0 1.13.051c.127-.079.25-.22.497-.501c.534-.61.801-.916 1.07-1.078a2 2 0 0 1 2.35.21c.235.207.443.555.86 1.25L19.5 18.5"/><path stroke="currentColor" stroke-linecap="round" d="M6.5 9V5m11 4V5m-15 12V7m19 0v10M17.507 4.963c1.64.307 2.868.743 3.505 1.246c.637.502.65 1.045.04 1.55c-.611.505-1.816.945-3.44 1.258c-1.624.313-3.584.482-5.597.483c-2.013 0-3.975-.167-5.602-.478c-1.628-.312-2.838-.751-3.455-1.255c-.618-.505-.61-1.047.02-1.55c.631-.504 1.853-.94 3.49-1.25"/><path stroke="currentColor" d="M21.5 17c0 .663-1 1.299-2.782 1.768c-1.782.469-4.198.732-6.718.732c-2.52 0-4.936-.263-6.718-.732C3.501 18.298 2.5 17.663 2.5 17"/></g></svg>
+                        </label>
+                        <input type="file" id="select" @change="uploadImages" multiple class="hidden"/>
+                        <div class="" v-if="images.length">
+                            <div class="relative w-full h-full">
+                                <Carousel class="w-full ">
+                                    <CarouselContent  class="w-60 h-60">
+                                    <CarouselItem class="flex justify-center" v-for="image in images" :key="image">
+                                        <img class="" :src="image" alt="selected">
+                                    </CarouselItem>
+                        
+                                    </CarouselContent>
+                                    <CarouselPrevious />
+                                    <CarouselNext />
+                                </Carousel>
+                            </div>
+                            
                         </div>
                     </div>
                 </DialogDescription>
@@ -34,25 +46,46 @@
 
 <script lang="ts" setup>
 const use_modal = useModal()
-
+const filesList = usePoster().files
 const images = ref<string[]>([])
+const fileselect = ref<File[]>([])
+
 
 const uploadImages = async (event: Event) => {
   const target = event.target as HTMLInputElement
   const files = target.files
+  images.value = []
+  
   if (!files) return
+  if (filesList.length > 0){
+    filesList.length = 0
+  }
 
-  const formData = new FormData()
-
-  for (const file of files) {
-    formData.append('files', file)
+  fileselect.value = []
+  if (files){
+  
+    for(let i = 0 ; i < files.length ; i++){
+        const file = files[i]
+        const reader = new FileReader()
+        reader.onload = e =>{
+            images.value.push(e.target?.result as string)
+        }
+        reader.readAsDataURL(file)
+        fileselect.value.push(file)
+    }
   }
 }
 
 const clickConfirm = () =>{
-    console.log(images.value);
-    
+   filesList.length = 0 
+   filesList.push(...fileselect.value)
+   images.value = []
+   useModal().upload = false
+   
 }
+
+
+
 </script>
 
 <style>

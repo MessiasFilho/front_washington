@@ -12,10 +12,12 @@
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
     "@sweetalert2/theme-minimal": "^5.0.16",
-    "@vueuse/core": "^10.9.0",
+    "@vueuse/core": "^10.11.0",
     "@vueuse/nuxt": "^10.9.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "embla-carousel": "^8.1.5",
+    "embla-carousel-vue": "^8.1.5",
     "lucide-vue-next": "^0.379.0",
     "nuxt": "^3.11.2",
     "pinia": "^2.1.7",

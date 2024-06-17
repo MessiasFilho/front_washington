@@ -81,7 +81,6 @@ const clickConfirm = () =>{
    filesList.push(...fileselect.value)
    images.value = []
    useModal().upload = false
-   
 }
 
 

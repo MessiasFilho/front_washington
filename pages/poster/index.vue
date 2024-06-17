@@ -51,7 +51,6 @@
 <script setup lang="ts">
 import type { page } from '~/stores/poster';
 
-
 definePageMeta({
   name:'poster'
 })
@@ -89,6 +88,8 @@ const clickSelect = () =>{
 
 const clickConfirm = async () =>{
   await use_upload.uploadImagen(inform.value)
+  console.log('oi');
+  
 }
 </script>
 

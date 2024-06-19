@@ -38,6 +38,27 @@
     --color-button: #112037;
     --color-alerts: #5d648e; 
     --color-card: #2f3b51; 
+
+    ::-webkit-scrollbar {
+      width: 10px; /* Largura da barra de rolagem */
+      height: 10px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #df191900; /* Cor de fundo da pista */
+      
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #88888894; /* Cor da alça da barra de rolagem */
+      border-radius: 10px;
+  
+    
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: #55555569; /* Cor da alça da barra de rolagem ao passar o mouse */
+    }
   }
  
   .dark {

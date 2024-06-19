@@ -46,14 +46,13 @@
       <div class="w-full  p-2">  
           <span>Salas disponiveis </span>
           <div class="flex items-center overflow-x-auto snap-x space-x-3">
-            <div v-for="i in 10">
-              <RoomsCard :id="i" :img="img"/>
+            <div v-for=" poster in usePoster().posters " key="">
+              <RoomsCard :id="poster.id" :title="String(poster.title)"  :description="String(poster.description)" :valor="poster.aluguel" :img="String(poster.url)"/>
             </div>
         </div>
        
       </div>
     </div>
-  
 </template>
 
 <script lang="ts" setup>
@@ -89,9 +88,11 @@ const openMeeting = () =>{
 }
 
 onMounted( async () =>{
+
+  await  usePoster().showPosters()
+
   const login = localStorage.getItem('login')
   if (!login) return
-
   use_user.getuser()
 })
 </script>

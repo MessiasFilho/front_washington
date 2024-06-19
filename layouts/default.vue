@@ -48,7 +48,13 @@ const navigatePage = (page: string) =>{
   return navigateTo({
     name: page
   })
+
+  onMounted(async () =>{
+   
+  })
 }
+
+
 </script>
 
 <style>

@@ -12,4 +12,5 @@ const { $toast } = useNuxtApp()
   
   // })
 // })
+
 </script>

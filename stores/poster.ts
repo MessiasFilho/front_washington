@@ -1,29 +1,32 @@
 export interface page{
-    title: string, 
+    title: String, 
     metros: number, 
     aluguel: number, 
     venda: number, 
     andar: number, 
     sala: number, 
-    telefone: string, 
-    descricao: string 
+    telefone: String, 
+    description: String 
+    url: String
 }
 interface imagens {
-    id: number, 
-    url: string
+    id: Number, 
+}
+interface posterImages{
+    imagen : imagens[]
 }
 
-
 interface posterUrl extends page{
-    url: string,
-    imgen: imagens[]
+    id: number, 
+    url: String,
 }
 
 export const usePoster = defineStore('poster',{
     state: () => ({
         files: [] as File[], 
         file: {} as File | null, 
-        posters: {} as posterUrl 
+        poster: {} as posterUrl, 
+        posters : {} as posterUrl[]
     }), 
     actions:{
         async uploadImagen( info: page ){
@@ -79,15 +82,17 @@ export const usePoster = defineStore('poster',{
         }, 
 
         async showPosters(){
-            const {data , error} = await useFetch<posterUrl>('upload/posters',{
+            const {data , error} = await useFetch<posterUrl[]>('upload/posters',{
                 method: 'get',
                 baseURL: useRuntimeConfig().public.backend
             })
             if(error.value){
-                console.log(error.value);
+                console.log(error.value.data);
             }
             if(data.value){
                 console.log(data.value);
+                
+               this.posters = data.value
             }
         }
 

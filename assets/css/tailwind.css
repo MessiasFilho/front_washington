@@ -38,6 +38,7 @@
     --color-button: #112037;
     --color-alerts: #5d648e; 
     --color-card: #2f3b51; 
+    --color-body: #030c1a;
 
     ::-webkit-scrollbar {
       width: 10px; /* Largura da barra de rolagem */

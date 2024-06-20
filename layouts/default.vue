@@ -20,7 +20,7 @@
        </div>
       </header>
       <div class=" mb-5 w-full relative">
-          <div class="">
+          <div class="bg-[var(--color-body)]">
             <slot/>
           </div>
       </div>

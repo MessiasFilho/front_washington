@@ -13,7 +13,7 @@ interface imagens {
     id: Number, 
     url: string,
 }
-interface posterImages extends page{
+interface posterImages {
     imagen : imagens[]
 }
 
@@ -26,11 +26,12 @@ export const usePoster = defineStore('poster',{
     state: () => ({
         files: [] as File[], 
         file: {} as File | null, 
-        poster: {} as posterImages, 
+        poster: {} as page, 
         posters : {} as posterUrl[],
-        imgens: [] as posterImages ,
+        imgens: [] as imagens[],
     }), 
     actions:{
+
         async uploadImagen( info: page ){
             interface uploadInter {
                 message : string, 
@@ -78,7 +79,7 @@ export const usePoster = defineStore('poster',{
                 console.log(error.value);
             }
             if (data.value){
-                console.log(data); 
+                
             }
 
         }, 
@@ -92,22 +93,35 @@ export const usePoster = defineStore('poster',{
                 console.log(error.value.data);
             }
             if(data.value){
-                console.log(data.value);
-                
+               
                this.posters = data.value
             }
         }, 
         async posterImagens(id: number){
-            const {data, error} = await useFetch<posterImages>(`upload/poster/${id}`,{
-                method: 'get', 
+            const {data, error} = await useFetch<page>(`upload/poster/${id}`,{
+                method: 'GET', 
                 baseURL: useRuntimeConfig().public.backend, 
             })
             if (error.value){
-
+                console.log(error.value.data);
             }
             if (data.value){
-                this.poster = data.value
-                this.imgens = data.value.imagen
+               this.poster = data.value
+            }
+        },
+
+        async getImagens(id: number){
+            const {data, error} = await useFetch<imagens[]>(`upload/imgens/${id}`,{
+                method: 'GET', 
+                baseURL: useRuntimeConfig().public.backend, 
+            })
+            if (error.value){
+                console.log(error.value.data);
+            }
+            if (data.value){
+                this.imgens = data.value
+                console.log(this.imgens);
+                
             }
         }
 

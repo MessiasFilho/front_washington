@@ -6,13 +6,13 @@
             <div class="h-20 absolute bg-gradient-to-b from-transparent to-[var(--gradient)] filter blur-[1px] w-full bottom-0"></div>  
         </div>
       </div>
-        <div class="flex flex-col  rounded-md items-center  p-1  font-bold bg-white bg-opacity-5 backdrop-blur-sm  shadow-lg">
-          <span class="text-lg ">
-            Bem-vindos
-          </span>
-          <span class="text-sm text-red-600">
-            Empresarial Washington Soares
-          </span>
+        <div class="flex flex-col items-center  p-1  font-bold bg-[var(--color-button)]">
+            <span class="text-lg ">
+              Bem-vindos
+            </span>
+            <span class="text-sm text-red-600">
+              Empresarial Washington Soares
+            </span>
         </div>
         <div class="p-2">
           <span class="text-sm flex  p-1">
@@ -21,26 +21,33 @@
         </div>
         <div v-if="verifUser">
           <div class=" flex overflow-x-auto w-full px-2 ">
-              <div @click="openMeeting()" class="p-2 rounded-lg shadow-2xl  bg-[var(--card-color)] border cursor-pointer active:scale-95">
-                    <div class="hover:scale-105 flex flex-col items-center">
-                      <div class=" flex justify-center items-center ">
-                        <img class="rounded-md w-32" src="../assets/image/reunia.jpeg" alt="reuniao">
+              <div @click="openMeeting()" class="py-2 hover:scale-95 rounded-lg shadow-xl bg-[var(--color-button)] cursor-pointer active:scale-95">
+                    <div class="flex items-center ">
+                      <div class=" p-1 rounded-full shadow-2xl">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><path fill="currentColor" d="M7 10h2a1 1 0 0 0 0-2H7a1 1 0 0 0 0 2m14-6h-8V3a1 1 0 0 0-2 0v1H3a1 1 0 0 0-1 1v10a3 3 0 0 0 3 3h4.59l-2.3 2.29a1 1 0 0 0 0 1.42a1 1 0 0 0 1.42 0l2.29-2.3V21a1 1 0 0 0 2 0v-1.59l2.29 2.3a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.42L14.41 18H19a3 3 0 0 0 3-3V5a1 1 0 0 0-1-1m-1 11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6h16ZM7 14h6a1 1 0 0 0 0-2H7a1 1 0 0 0 0 2"/></svg>
                       </div>
-                          <span class=" text-sm">Marcar Reunião</span>
+                          <span class=" px-2 font-semibold text-sm">Marcar Reunião</span>
                     </div>
                 </div>
             </div>
         </div>
        <div class="p-2 flex flex-col">
-         <span>Noticias</span>
-          <div v-if="image">
-            <img :src="image" alt="selected">
-          </div>
-          <label for="imgge"> adicionar imagem</label>
-          <input class="hidden" id="imgge" type="file" @change="onFileChange" >
-          <div>
-            queda de energia 
-          </div>
+        <div class="w-full shadow-2xl bg-[var(--color-button)] border rounded-lg  h-full flex flex-col items-center justify-center">
+         <div class="bg-red-500 w-full flex justify-center rounded-t-md "><span>Noticias</span></div>
+            <div class="flex flex-col justify-center items-center">
+              <span class="p-1">Title</span>
+              <div>
+                <img src="/assets/image/reuniao.webp" alt="noticia">
+              </div>
+              <div class="p-2 w-full ">
+                <span>descrição</span>
+              </div>
+            </div>
+        </div>
+
+           <div class="w-full active:scale-95 bg-[var(--color-button)] border mt-3 p-1 flex justify-center items-center  ">
+           <span>Sereviços</span>
+           </div>
        </div>
     
       <div class="w-full  p-2">  

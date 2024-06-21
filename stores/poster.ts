@@ -13,9 +13,6 @@ interface imagens {
     id: Number, 
     url: string,
 }
-interface posterImages {
-    imagen : imagens[]
-}
 
 interface posterUrl extends page{
     id: number, 

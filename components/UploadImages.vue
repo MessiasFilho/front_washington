@@ -23,7 +23,6 @@
                                     <CarouselItem class="flex justify-center" v-for="image in images" :key="image">
                                         <img class="" :src="image" alt="selected">
                                     </CarouselItem>
-                        
                                     </CarouselContent>
                                     <CarouselPrevious />
                                     <CarouselNext />
@@ -34,9 +33,6 @@
                     </div>
                 </DialogDescription>
             </DialogHeader>
-                <div class="w-full">
-                </div>
-               
             <DialogFooter class="flex items-center">
                 <button @click="clickConfirm()" class="w-max active:scale-95 text-white px-2 bg-green-600 uppercase rounded-md">confirmar</button>
             </DialogFooter>
